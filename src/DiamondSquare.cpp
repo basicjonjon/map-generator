@@ -6,7 +6,7 @@
 /*   By: jle-doua <jle-doua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 17:27:19 by jle-doua          #+#    #+#             */
-/*   Updated: 2026/07/14 19:31:01 by jle-doua         ###   ########.fr       */
+/*   Updated: 2026/07/14 20:15:22 by jle-doua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,27 +39,58 @@ void DiamondSquare::printMap()
    }
 }
 
-
-
-void DiamondSquare::genMap()
+void DiamondSquare::genCorner()
 {
-    std::cout << "test : " << size /2 + 1 << std::endl;
-    srand(time(NULL));
-    // generate corner
     this->map[0][0] = rand() % (this->rangeAlt + 1);
     this->map[0][size - 1] = rand() % (this->rangeAlt + 1);
     this->map[size - 1][0] = rand() % (this->rangeAlt + 1);
     this->map[size - 1][size - 1] = rand() % (this->rangeAlt + 1);
+}
 
-    // generate center 
+int DiamondSquare::genValue(int value)
+{
     int randNum = (rand() % (this->rangeRand * 2) - this->rangeRand);
-    this->map[size /2][size /2] = (this->map[0][0] + this->map[0][size - 1] + this->map[size - 1][0] + this->map[size - 1][size - 1]) / 4;
-    std::cout << "mid map : " << this->map[size /2][size /2] << " rand : " << randNum <<std::endl;
-    if (this->map[size /2][size /2] + (rand() % (this->rangeRand * 2) - this->rangeRand) > rangeAlt)
-        this->map[size /2][size /2] = rangeAlt;
-    else if (this->map[size /2][size /2] + (rand() % (this->rangeRand * 2) - this->rangeRand) < 0)
-        this->map[size /2][size /2] = 0;
-    else
-        this->map[size /2][size /2] += randNum;
+    int centerValue = randNum + value;
+    if (centerValue > this->rangeAlt || centerValue < 0)
+    {
+        if (centerValue > this->rangeAlt)
+            centerValue = rangeAlt;
+        else
+            centerValue = 0;
+    }
+    return (centerValue);
+}
+
+void DiamondSquare::genCenter(int start, int end)
+{
+    int midValue = (this->map[start][start] + this->map[start][end -1] + this->map[end - 1][start] + this->map[end - 1][end - 1]) / 4;
+    int size = end - start;
+
+    this->map[size /2][size /2] = genValue(midValue);
+}
+
+
+void DiamondSquare::genBorder(int start, int end)
+{
+    int size = end - start;
+    int midValue = this->map[size/2][size/2];
+    int resValue = (this->map[start][start] + this->map[start][end] + midValue) / 3;
+    this->map[start][size/2] = genValue(resValue);
+    resValue = (this->map[start][end] + this->map[end][end] + midValue) / 3;
+    this->map[size/2][end] = genValue(resValue);
+    resValue = (this->map[end][start] + this->map[end][end] + midValue) / 3;
+    this->map[end][size/2] = genValue(resValue);
+    resValue = (this->map[end][start] + this->map[start][start] + midValue) / 3;
+    this->map[size/2][start] = genValue(resValue);
+
+}
+
+void DiamondSquare::genMap()
+{
+    srand(time(NULL));
+    genCorner();
+    genCenter(0, size);
+    genBorder(0, size - 1);
+    std::cout << std::endl;
     printMap();
 }

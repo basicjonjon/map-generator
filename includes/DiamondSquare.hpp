@@ -6,7 +6,7 @@
 /*   By: jle-doua <jle-doua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 17:28:03 by jle-doua          #+#    #+#             */
-/*   Updated: 2026/07/14 19:18:45 by jle-doua         ###   ########.fr       */
+/*   Updated: 2026/07/14 20:03:24 by jle-doua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@ public:
     ~DiamondSquare();
 
     void printMap();
+    void genCorner();
+    int genValue(int value);
+    void genCenter(int star, int end);
+    void genBorder(int start, int end);
     void genMap();
 };
 
