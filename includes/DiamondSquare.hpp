@@ -6,7 +6,7 @@
 /*   By: jle-doua <jle-doua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 17:28:03 by jle-doua          #+#    #+#             */
-/*   Updated: 2026/07/14 20:03:24 by jle-doua         ###   ########.fr       */
+/*   Updated: 2026/07/16 18:47:11 by jle-doua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,16 @@
 #include <vector>
 #include <iostream>
 
+
+typedef struct s_squarePos
+{
+    int x_start;
+    int y_start;
+    int x_end;
+    int y_end;
+    int x_center;
+    int y_center;
+}t_pos;
 class DiamondSquare
 {
 private:
@@ -23,16 +33,27 @@ private:
     std::vector<std::vector<int> > map;
     int rangeAlt;
     int rangeRand;
+    t_pos pos;
 public:
     DiamondSquare(int size, int rangeAlt, int rangeRand);
     ~DiamondSquare();
 
-    void printMap();
+    int getSize() const;
+    int getRangeAlt() const;
+    int getRangeRand() const;
+    t_pos getPos() const;
+    std::vector<std::vector<int> > getMap() const;
+
+    void genCenter();
+    void setPos(int x_start, int y_start, int x_end, int y_end);
+    // void calcPos(int size, int actualSize);
+    void printMap() const;
     void genCorner();
     int genValue(int value);
-    void genCenter(int star, int end);
-    void genBorder(int start, int end);
+    void genBorder(int ignoreLeft, int ignoreTop);
     void genMap();
 };
+
+std::ostream &operator<<(std::ostream &o, DiamondSquare const &map);
 
 #endif
