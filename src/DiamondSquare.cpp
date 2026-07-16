@@ -6,7 +6,7 @@
 /*   By: jle-doua <jle-doua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 17:27:19 by jle-doua          #+#    #+#             */
-/*   Updated: 2026/07/14 20:15:22 by jle-doua         ###   ########.fr       */
+/*   Updated: 2026/07/16 15:48:11 by jle-doua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,13 @@ void DiamondSquare::genBorder(int start, int end)
 {
     int size = end - start;
     int midValue = this->map[size/2][size/2];
-    int resValue = (this->map[start][start] + this->map[start][end] + midValue) / 3;
+    int resValue = (this->map[start][start] + this->map[start][end - 1] + midValue) / 3;
     this->map[start][size/2] = genValue(resValue);
-    resValue = (this->map[start][end] + this->map[end][end] + midValue) / 3;
-    this->map[size/2][end] = genValue(resValue);
-    resValue = (this->map[end][start] + this->map[end][end] + midValue) / 3;
-    this->map[end][size/2] = genValue(resValue);
-    resValue = (this->map[end][start] + this->map[start][start] + midValue) / 3;
+    resValue = (this->map[start][end - 1] + this->map[end - 1][end - 1] + midValue) / 3;
+    this->map[size/2][end - 1] = genValue(resValue);
+    resValue = (this->map[end - 1][start] + this->map[end - 1][end - 1] + midValue) / 3;
+    this->map[end - 1][size/2] = genValue(resValue);
+    resValue = (this->map[end - 1][start] + this->map[start][start] + midValue) / 3;
     this->map[size/2][start] = genValue(resValue);
 
 }
@@ -90,7 +90,7 @@ void DiamondSquare::genMap()
     srand(time(NULL));
     genCorner();
     genCenter(0, size);
-    genBorder(0, size - 1);
+    genBorder(0, size);
     std::cout << std::endl;
     printMap();
 }
