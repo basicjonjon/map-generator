@@ -6,7 +6,7 @@
 /*   By: jle-doua <jle-doua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 17:27:19 by jle-doua          #+#    #+#             */
-/*   Updated: 2026/07/16 18:49:20 by jle-doua         ###   ########.fr       */
+/*   Updated: 2026/07/20 17:31:07 by jle-doua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,9 @@ void DiamondSquare::setPos(int x_start, int y_start, int x_end, int y_end)
     pos.x_end = x_end;
     pos.y_start = y_start;
     pos.y_end = y_end;
-    pos.x_center = this->pos.x_start + (this->pos.x_end / 2);
-    pos.y_center = this->pos.y_start + (this->pos.y_end / 2);
+    pos.x_center = (this->pos.x_start + this->pos.x_end) / 2;
+    // pos.x_center = this->pos.x_start + (this->pos.x_end) / 2;
+    pos.y_center = (this->pos.y_start + this->pos.y_end) / 2;
 }
 
 // t_pos  DiamondSquare::calcPos(int size, int actualSize)
@@ -81,8 +82,9 @@ void DiamondSquare::genCenter()
                        this->map[this->pos.y_end][this->pos.x_start] +
                        this->map[this->pos.y_end][this->pos.x_end]) /
                       4;
-    std::cout << "centerValue : " << centerValue << std::endl;
-    this->map[this->pos.x_center][this->pos.y_center] = genValue(centerValue);
+    this->map[this->pos.y_center][this->pos.x_center] = genValue(centerValue);
+    std::cout << "centerpos : " << this->pos.x_center << " - " << this->pos.y_center << std::endl;
+    std::cout << "centerValue : " << this->map[this->pos.y_center][this->pos.x_center] << std::endl;
 }
 
 void DiamondSquare::genBorder(int ignoreLeft, int ignoreTop)
@@ -241,9 +243,9 @@ std::ostream &operator<<(std::ostream &o, DiamondSquare const &map)
 
     o << "Range altitude : " << map.getRangeAlt() << std::endl;
     o << "Range random : " << map.getRangeRand() * -1 << " " << map.getRangeRand() << std::endl;
-    o << "Actual Start pos : [" << map.getPos().x_start << "][" << map.getPos().x_end << "]" << std::endl;
-    o << "Actual End pos : [" << map.getPos().y_start << "][" << map.getPos().y_end << "]" << std::endl;
-    o << "Actual center : [" << map.getPos().x_center << "][" << map.getPos().y_center << "]" << std::endl;
+    o << "Actual X pos : [" << map.getPos().x_start << "][" << map.getPos().x_end << "]" << std::endl;
+    o << "Actual Y pos : [" << map.getPos().y_start << "][" << map.getPos().y_end << "]" << std::endl;
+    o << "Actual C pos : [" << map.getPos().y_center << "][" << map.getPos().x_center << "]" << std::endl;
     o << std::endl;
     map.printMap();
     return (o);
