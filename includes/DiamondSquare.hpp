@@ -6,7 +6,7 @@
 /*   By: jle-doua <jle-doua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 17:28:03 by jle-doua          #+#    #+#             */
-/*   Updated: 2026/07/16 18:47:11 by jle-doua         ###   ########.fr       */
+/*   Updated: 2026/07/20 18:23:19 by jle-doua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,13 @@ class DiamondSquare
 {
 private:
     int size;
+    int actualSize;
     std::vector<std::vector<int> > map;
     int rangeAlt;
     int rangeRand;
     t_pos pos;
+    bool ignoreLeft;
+    bool ignoreTop;
 public:
     DiamondSquare(int size, int rangeAlt, int rangeRand);
     ~DiamondSquare();
@@ -50,7 +53,7 @@ public:
     void printMap() const;
     void genCorner();
     int genValue(int value);
-    void genBorder(int ignoreLeft, int ignoreTop);
+    void genBorder();
     void genMap();
 };
 
