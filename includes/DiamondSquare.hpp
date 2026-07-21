@@ -6,7 +6,7 @@
 /*   By: jle-doua <jle-doua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 17:28:03 by jle-doua          #+#    #+#             */
-/*   Updated: 2026/07/20 18:23:19 by jle-doua         ###   ########.fr       */
+/*   Updated: 2026/07/21 18:04:36 by jle-doua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ private:
     t_pos pos;
     bool ignoreLeft;
     bool ignoreTop;
+    int genNumber;
 public:
     DiamondSquare(int size, int rangeAlt, int rangeRand);
     ~DiamondSquare();

@@ -6,7 +6,7 @@
 /*   By: jle-doua <jle-doua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 17:27:19 by jle-doua          #+#    #+#             */
-/*   Updated: 2026/07/20 18:41:26 by jle-doua         ###   ########.fr       */
+/*   Updated: 2026/07/21 18:19:01 by jle-doua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,11 @@
 #include <cstdlib>
 #include <cmath>
 #include <iostream>
+#include <color.h>
 
-DiamondSquare::DiamondSquare(int size, int rangeAlt, int rangeRand) : size(pow(2, size)),actualSize(size), map(this->size + 1, std::vector<int>(this->size + 1, 0)), rangeAlt(rangeAlt), rangeRand(rangeRand), ignoreLeft(false), ignoreTop(false)
+DiamondSquare::DiamondSquare(int size, int rangeAlt, int rangeRand) : size(pow(2, size)), map(this->size + 1, std::vector<int>(this->size + 1, 0)), rangeAlt(rangeAlt), rangeRand(rangeRand), ignoreLeft(false), ignoreTop(false)
 {
+    this->actualSize = this->size;
 }
 
 DiamondSquare::~DiamondSquare()
@@ -77,21 +79,13 @@ void DiamondSquare::setPos(int x_start, int y_start, int x_end, int y_end)
         ignoreTop = false;
 }
 
-// t_pos  DiamondSquare::calcPos(int size, int actualSize)
-// {
-
-// }
-
 void DiamondSquare::genCenter()
 {
     int centerValue = (this->map[this->pos.y_start][this->pos.x_start] +
                        this->map[this->pos.y_start][this->pos.x_end] +
                        this->map[this->pos.y_end][this->pos.x_start] +
-                       this->map[this->pos.y_end][this->pos.x_end]) /
-                      4;
+                       this->map[this->pos.y_end][this->pos.x_end]) / 4;
     this->map[this->pos.y_center][this->pos.x_center] = genValue(centerValue);
-    std::cout << "centerpos : " << this->pos.x_center << " - " << this->pos.y_center << std::endl;
-    std::cout << "centerValue : " << this->map[this->pos.y_center][this->pos.x_center] << std::endl;
 }
 
 void DiamondSquare::genBorder()
@@ -111,14 +105,12 @@ void DiamondSquare::genBorder()
            this->map[this->pos.y_center][this->pos.x_center]) /
           3;
     this->map[this->pos.y_center][this->pos.x_end] = genValue(res);
-
     // bottom
     res = (this->map[this->pos.y_end][this->pos.x_end] +
            this->map[this->pos.y_end][this->pos.x_start] +
            this->map[this->pos.y_center][this->pos.x_center]) /
           3;
     this->map[this->pos.y_end][this->pos.x_center] = genValue(res);
-    
     // left
     if (!this->ignoreLeft)
     {
@@ -131,118 +123,28 @@ void DiamondSquare::genBorder()
 
 void DiamondSquare::genMap()
 {
+    printMap();
     srand(time(NULL));
     setPos(0, 0, size, size);
     genCorner();
-    
-
-    while (actualSize > 1)
+    genCenter();
+    genBorder();
+    while (actualSize > 0)
     {
-        do 
+        actualSize /= 2;
+        setPos(0,0, actualSize, actualSize);
+        while (this->pos.y_end <= this->size && this->pos.x_end <= this->size)
         {
-            if (this->pos.x_end != this->size && this->pos.x_end != this->size)
-            {
-                setPos(0, 0, size / 2, size / 2);// a modifier
-            }
+            printMap();
             genCenter();
             genBorder();
-        } while (this->pos.x_end != this->size && this->pos.x_end != this->size);
-        actualSize /= 2;
+            if (this->pos.x_end == this->size)
+                setPos(0, this->pos.y_start + actualSize, actualSize, this->pos.y_end + actualSize);
+            else
+                setPos(this->pos.x_start + actualSize, this->pos.y_start, this->pos.x_end + actualSize, this->pos.y_end);
+        }
     }
-    
-    
-    
-    
-    // genBorder();
-
-    // std::cout << *this;
-
-    // setPos(0, 0, size / 2, size / 2);
-    // this->rangeRand /= 2;
-    // genCenter();
-    // genBorder();
-
-    // std::cout << *this;
-
-
-    // setPos(size/2, 0, size, size / 2);
-    // genCenter();
-    // //(1,1) si x ou y est != 0;
-    // genBorder();
-
-    // setPos(0, size/2, size/2, size);
-    // genCenter();
-    // //(1,1) si x ou y est != 0;
-    // genBorder();
-
-    // setPos(size/2, size/2, size, size);
-    // genCenter();
-    // //(1,1) si x ou y est != 0;
-    // genBorder();
-
-    std::cout << *this;
 }
-
-// void DiamondSquare::genMap()
-// {
-//     t_pos P = setPos(0,0, size, size);
-//     // int actualSize = 0;
-//     // srand(time(NULL));
-
-//     // genCorner();
-//     // genCenter(0, size);
-//     // genBorder(0, size, 0);
-
-//     // std::cout << std::endl;
-//     // printMap();
-
-//     // actualSize = size / 2;
-//     // genCenter(0, actualSize);
-//     // genBorder(0, actualSize, 0);
-
-//     // // std::cout << std::endl;
-//     // // printMap();
-
-//     // // genCenter(actualSize, size);
-//     // // genBorder(actualSize, size, 1);
-
-//     // std::cout << std::endl;
-//     // printMap();
-// }
-
-// void DiamondSquare::genCenter(int start, int end)
-// {
-//     int midValue = (this->map[start][start] + this->map[start][end - 1] + this->map[end - 1][start] + this->map[end - 1][end - 1]) / 4;
-//     int size = end - start;
-//     this->map[end - (start + size / 2)][start + size / 2] = genValue(midValue);
-//     // std::cout << std::endl
-//     //           << "start = " << start << std::endl
-//     //           << "end = " << end << std::endl;
-//     // std::cout << "center = " << end - (start + size / 2) << " - " << start + size / 2 << std::endl;
-//     std::cout << std::endl
-//               << "value " << thiprintMap();
-   // std::cout << *this;s->map[end - (start + size / 2)][start + size / 2] << std::endl;
-// }
-
-// void DiamondSquare::genBorder(int start, int end, int ignore)
-// {
-//     (void)ignore;
-//     int size = end - start;
-//     int midValue = this->map[end - (start + size / 2)][start + size / 2];
-
-//     int resValue = (this->map[start][start] + this->map[start][end] + midValue) / 3;
-//     this->map[start][start + size / 2] = genValue(resValue);
-//     std::cout << "border mid = " << start << "-" << start + size / 2 << std::endl;
-
-//     resValue = (this->map[start][end] + this->map[end][end] + midValue) / 3;
-//     this->map[size / 2][end] = genValue(resValue);
-
-//     resValue = (this->map[end][start] + this->map[end][end] + midValue) / 3;
-//     this->map[end][start + size / 2] = genValue(resValue);
-
-//     resValue = (this->map[end][start] + this->map[start][start] + midValue) / 3;
-//     this->map[size / 2][start] = genValue(resValue);
-// }
 
 int DiamondSquare::getSize() const
 {
