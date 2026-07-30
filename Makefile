@@ -1,7 +1,7 @@
 NAME = mapgen
 
 CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -Iincludes
+CXXFLAGS = -Wall -Wextra -Werror -std=c++11 -Iincludes
 RM = rm -f
 
 LIBFT = libft/libft.a

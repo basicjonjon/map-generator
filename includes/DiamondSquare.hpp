@@ -6,7 +6,7 @@
 /*   By: jle-doua <jle-doua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 17:28:03 by jle-doua          #+#    #+#             */
-/*   Updated: 2026/07/30 17:42:20 by jle-doua         ###   ########.fr       */
+/*   Updated: 2026/07/30 19:19:07 by jle-doua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,76 +15,44 @@
 
 #include <vector>
 #include <iostream>
+#include <random>
 
-// class DiamondSquare
-// {
-// private:
-//     int size;
-//     int stepX;
-//     int stepY;
-//     int rangeAlt;
-//     int rangeRand;
-//     std::vector<std::vector<int> > map;
 
-// public:
-//     DiamondSquare(int size, int rangeAlt, int rangeRand);
-//     ~DiamondSquare();
-
-//     void generation();
-
-//     void printMap() const;
-
-//     int getSize() const;
-//     int getRangeAlt() const;
-//     int getRangeRand() const;
-//     int getStepX() const;
-//     int getStepY() const;
-// };
-
-typedef struct s_squarePos
-{
-    int x_start;
-    int y_start;
-    int x_end;
-    int y_end;
-    int x_center;
-    int y_center;
-}t_pos;
 class DiamondSquare
 {
 private:
     int size;
-    int actualSize;
-    std::vector<std::vector<int> > map;
+    int step;
+    int x;
+    int y;
     int rangeAlt;
     int rangeRand;
-    t_pos pos;
-    bool ignoreLeft;
-    bool ignoreTop;
-    int genNumber;
+    std::vector<std::vector<int> > map;
+
 public:
     DiamondSquare(int size, int rangeAlt, int rangeRand);
     ~DiamondSquare();
 
+    void generation();
+    void genCorner();
+    void genCenter();
+    void genBorder();
+
+    int cornerAverage();
+    int borderAverage(std::pair<int,int> c1, std::pair<int,int> c2);
+    int genRandomValue(int value);
+    
+    void printMap() const;
+    
     int getSize() const;
-    int getActualSize() const;
     int getRangeAlt() const;
     int getRangeRand() const;
-    t_pos getPos() const;
-    std::vector<std::vector<int> > getMap() const;
-
-    void genCenter();
-    void setPos(int x_start, int y_start, int x_end, int y_end);
-    // void calcPos(int size, int actualSize);
-    void printMap() const;
-    void genCorner();
-    int genValue(int value);
-    void genBorder();
-    void genMap();
+    int getStepX() const;
+    int getStepY() const;
+    std::pair<int,int> getCenter() const;
 };
 
-
-
+int randomInt(int min, int max);
 std::ostream &operator<<(std::ostream &o, DiamondSquare const &map);
 
 
