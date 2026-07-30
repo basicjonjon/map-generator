@@ -6,7 +6,7 @@
 /*   By: jle-doua <jle-doua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 17:28:03 by jle-doua          #+#    #+#             */
-/*   Updated: 2026/07/21 18:04:36 by jle-doua         ###   ########.fr       */
+/*   Updated: 2026/07/30 17:42:20 by jle-doua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,30 @@
 #include <vector>
 #include <iostream>
 
+// class DiamondSquare
+// {
+// private:
+//     int size;
+//     int stepX;
+//     int stepY;
+//     int rangeAlt;
+//     int rangeRand;
+//     std::vector<std::vector<int> > map;
+
+// public:
+//     DiamondSquare(int size, int rangeAlt, int rangeRand);
+//     ~DiamondSquare();
+
+//     void generation();
+
+//     void printMap() const;
+
+//     int getSize() const;
+//     int getRangeAlt() const;
+//     int getRangeRand() const;
+//     int getStepX() const;
+//     int getStepY() const;
+// };
 
 typedef struct s_squarePos
 {
@@ -43,6 +67,7 @@ public:
     ~DiamondSquare();
 
     int getSize() const;
+    int getActualSize() const;
     int getRangeAlt() const;
     int getRangeRand() const;
     t_pos getPos() const;
@@ -58,6 +83,9 @@ public:
     void genMap();
 };
 
+
+
 std::ostream &operator<<(std::ostream &o, DiamondSquare const &map);
+
 
 #endif
