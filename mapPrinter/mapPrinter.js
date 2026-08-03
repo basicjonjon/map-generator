@@ -14,10 +14,10 @@ function printMap()
     for (let y = 0; y < map.length; y++) {
         for (let x = 0; x < map.length; x++) {
             context.fillStyle = color[map[y][x]]
-            context.fillRect(posx,posy, 10, 10);
-            posx += 10;
+            context.fillRect(posx,posy, 3, 3);
+            posx += 3;
         }
-        posy +=10;
+        posy += 3;
         posx = 0;
     }
 }

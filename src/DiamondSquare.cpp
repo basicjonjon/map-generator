@@ -6,13 +6,14 @@
 /*   By: jle-doua <jle-doua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 17:27:19 by jle-doua          #+#    #+#             */
-/*   Updated: 2026/07/30 19:52:40 by jle-doua         ###   ########.fr       */
+/*   Updated: 2026/08/03 18:34:05 by jle-doua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "DiamondSquare.hpp"
 
 #include <vector>
+#include <map>
 #include <cstdlib>
 #include <cmath>
 #include <iostream>
@@ -29,29 +30,32 @@ DiamondSquare::~DiamondSquare()
 
 void DiamondSquare::generation()
 {
-    std::cout << *this << std::endl;
     genCorner();
-    for (; this->y < size; this->y += step)
+
+    int i = 3;
+    while (step > 1)
     {
-        for (; this->x < size; this->x += step)
+        for (; this->y < size; this->y += step)
         {
-            genCenter();
+            for (; this->x < size; this->x += step)
+            {
+                genCenter();
+            }
+            this->x = 0;
         }
-    }
-    this->x = 0;
-    this->y = 0;
-    genBorder();
-    step /= 2;
-    for (; this->y < size; this->y += step)
-    {
-        std::cout << "y :" << y << std::endl;
-        for (; this->x < size; this->x += step)
+        this->y = 0;
+        for (; this->y < size; this->y += step)
         {
-            genCenter();
-            std::cout << "x : " << x << std::endl;
-            std::cout << *this << std::endl;
+            for (; this->x < size; this->x += step)
+            {
+                genBorder();
+            }
+            this->x = 0;
         }
-        this->x = 0;
+        step /= 2;
+        rangeRand /= 2;
+        this->y = 0;
+        i--;
     }
     std::cout << *this << std::endl;
 }
@@ -66,21 +70,40 @@ void DiamondSquare::genCorner()
 
 void DiamondSquare::genCenter()
 {
-    this->map[getCenter().first][getCenter().second] = genRandomValue(cornerAverage());
+    this->map[getCenter(this->y, this->x).first][getCenter(this->y, this->x).second] = genRandomValue(cornerAverage());
 }
 
 void DiamondSquare::genBorder()
 {
-    // top
-    this->map[this->y][this->getCenter().second] = genRandomValue(borderAverage(std::make_pair(this->y, this->x), std::make_pair(this->y, this->x + this->step)));
-    // right
 
-    this->map[this->getCenter().first][this->x + step] = genRandomValue(borderAverage(std::make_pair(this->y, this->x + step), std::make_pair(this->y + step, this->x + step)));
-    // bot
-    this->map[this->y + step][this->getCenter().second] = genRandomValue(borderAverage(std::make_pair(this->y + step, this->x), std::make_pair(this->y + step, this->x + step)));
-
-    // left
-    this->map[this->getCenter().first][this->x] = genRandomValue(borderAverage(std::make_pair(this->y, this->x), std::make_pair(this->y + step, this->x)));
+    if (this->y == 0)
+    {
+        // top
+        this->map[this->y][this->getCenter(this->y, this->x).second] = genRandomValue(borderAverage({std::make_pair(this->y, this->x), std::make_pair(this->y, this->x + this->step), getCenter(this->y, this->x)}));
+    }
+    else
+    {
+        this->map[this->y][this->getCenter(this->y, this->x).second] = genRandomValue(borderAverage({std::make_pair(this->y, this->x), std::make_pair(this->y, this->x + this->step), getCenter(this->y, this->x), getCenter(this->y - this->step, this->x)}));
+    }
+    if (this->y + this->step == this->size)
+    {
+        // bot
+        this->map[this->y + step][this->getCenter(this->y, this->x).second] = genRandomValue(borderAverage({std::make_pair(this->y + step, this->x), std::make_pair(this->y + step, this->x + step), getCenter(this->y, this->x)}));
+    }
+    if (this->x == 0)
+    {
+        // left
+        this->map[this->getCenter(this->y, this->x).first][this->x] = genRandomValue(borderAverage({std::make_pair(this->y, this->x), std::make_pair(this->y + step, this->x), getCenter(this->y, this->x)}));
+    }
+    else
+    {
+        this->map[this->getCenter(this->y, this->x).first][this->x] = genRandomValue(borderAverage({std::make_pair(this->y, this->x), std::make_pair(this->y + step, this->x), getCenter(this->y, this->x), getCenter(this->y, this->x - this->step)}));
+    }
+    if (this->x + this->step == this->size)
+    {
+        // right
+        this->map[this->getCenter(this->y, this->x).first][this->x + step] = genRandomValue(borderAverage({std::make_pair(this->y, this->x + step), std::make_pair(this->y + step, this->x + step), getCenter(this->y, this->x)}));
+    }
 }
 
 int DiamondSquare::cornerAverage()
@@ -92,12 +115,15 @@ int DiamondSquare::cornerAverage()
             4);
 }
 
-int DiamondSquare::borderAverage(std::pair<int, int> c1, std::pair<int, int> c2)
+int DiamondSquare::borderAverage(std::vector<std::pair<int, int>> pos)
 {
-    return ((this->map[c1.first][c1.second] +
-             this->map[c2.first][c2.second] +
-             this->map[this->getCenter().first][this->getCenter().second]) /
-            3);
+    int res = 0;
+    for (size_t i = 0; i < pos.size(); i++)
+    {
+        res += this->map[pos[i].first][pos[i].second];
+    }
+    res /= pos.size();
+    return (res);
 }
 
 int DiamondSquare::genRandomValue(int value)
@@ -112,6 +138,44 @@ int DiamondSquare::genRandomValue(int value)
     }
     return (res);
 }
+
+int DiamondSquare::checkAround(int y, int x)
+{
+    // int value = this->map[y][x];
+    std::map<int, int> color;
+
+    if (x != 0)
+    {
+        color[this->map[y][x - 1]] += 1;
+    }
+    if (x != size)
+    {
+        color[this->map[y][x + 1]] += 1;
+    }
+    if (y != 0)
+    {
+        color[this->map[y - 1][x]] += 1;
+    }
+    if (y != size)
+    {
+        color[this->map[y + 1][x]] += 1;
+    }
+    std::map<int, int>::iterator it = color.begin();
+    std::map<int, int>::iterator max = it;
+
+    for (; it != color.end(); it++)
+    {
+        std::cout << it->first << " " << it->second << std::endl;
+        if (it->second > max->second)
+        {
+            max = it;
+        }
+    }
+    std::cout << "max = " << max->first << std::endl;
+
+    return (max->first);
+}
+
 
 void DiamondSquare::printMap() const
 {
@@ -142,6 +206,16 @@ int DiamondSquare::getRangeRand() const
     return (this->rangeRand);
 }
 
+int DiamondSquare::getStepX() const
+{
+    return (this->x);
+}
+
+int DiamondSquare::getStepY() const
+{
+    return (this->y);
+}
+
 int randomInt(int min, int max)
 {
     static std::random_device rd;
@@ -152,9 +226,9 @@ int randomInt(int min, int max)
     return distribution(generator);
 }
 
-std::pair<int, int> DiamondSquare::getCenter() const
+std::pair<int, int> DiamondSquare::getCenter(int y, int x) const
 {
-    return (std::make_pair(this->y + this->step / 2, this->x + this->step / 2));
+    return (std::make_pair(y + this->step / 2, x + this->step / 2));
 }
 
 std::ostream &operator<<(std::ostream &o, DiamondSquare const &map)
@@ -162,7 +236,7 @@ std::ostream &operator<<(std::ostream &o, DiamondSquare const &map)
     o << "size : " << map.getSize() << std::endl;
     o << "range Altitude : 1 - " << map.getRangeAlt() << std::endl;
     o << "range Random : " << map.getRangeRand() * -1 << " - " << map.getRangeRand() << std::endl;
-    o << "center : [" << map.getCenter().first << "][" << map.getCenter().second << "]" << std::endl;
+    o << "center : [" << map.getCenter(map.getStepY(), map.getStepX()).first << "][" << map.getCenter(map.getStepY(), map.getStepX()).second << "]" << std::endl;
 
     o << std::endl;
     map.printMap();

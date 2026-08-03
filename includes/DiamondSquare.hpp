@@ -6,7 +6,7 @@
 /*   By: jle-doua <jle-doua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 17:28:03 by jle-doua          #+#    #+#             */
-/*   Updated: 2026/07/30 19:19:07 by jle-doua         ###   ########.fr       */
+/*   Updated: 2026/08/03 18:34:12 by jle-doua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,21 @@ public:
     void genBorder();
 
     int cornerAverage();
-    int borderAverage(std::pair<int,int> c1, std::pair<int,int> c2);
+    int borderAverage(std::vector<std::pair<int,int> > corner);
+    // int borderAverage(std::pair<int,int> c1, std::pair<int,int> c2);
     int genRandomValue(int value);
     
+    int checkAround(int y, int x);
+    
     void printMap() const;
+    
     
     int getSize() const;
     int getRangeAlt() const;
     int getRangeRand() const;
     int getStepX() const;
     int getStepY() const;
-    std::pair<int,int> getCenter() const;
+    std::pair<int,int> getCenter(int y, int x) const;
 };
 
 int randomInt(int min, int max);
