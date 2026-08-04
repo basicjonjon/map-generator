@@ -6,7 +6,7 @@
 /*   By: jle-doua <jle-doua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 17:05:46 by jle-doua          #+#    #+#             */
-/*   Updated: 2026/08/03 18:31:39 by jle-doua         ###   ########.fr       */
+/*   Updated: 2026/08/04 17:01:45 by jle-doua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,5 @@ int main(int argc, char **argv)
         error("Wrong arg numbers");
     DiamondSquare res(std::atoi(argv[1]), 16, 4);
     res.generation();
-    // res.fixMap();
+    
 }

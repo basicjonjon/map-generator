@@ -6,7 +6,7 @@
 /*   By: jle-doua <jle-doua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 17:27:19 by jle-doua          #+#    #+#             */
-/*   Updated: 2026/08/03 18:34:05 by jle-doua         ###   ########.fr       */
+/*   Updated: 2026/08/04 17:08:22 by jle-doua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #include <color.h>
 #include <algorithm>
 
-DiamondSquare::DiamondSquare(int size, int rangeAlt, int rangeRand) : size(pow(2, size)), step(pow(2, size)), x(0), y(0), rangeAlt(rangeAlt), rangeRand(rangeRand), map(this->size + 1, std::vector<int>(this->size + 1, 0))
+DiamondSquare::DiamondSquare(int size, int rangeAlt, int rangeRand) : size(pow(2, size)), step(pow(2, size)), round(1), x(0), y(0), rangeAlt(rangeAlt), rangeRand(rangeRand), map(this->size + 1, std::vector<int>(this->size + 1, 0))
 {
 }
 
@@ -32,9 +32,11 @@ void DiamondSquare::generation()
 {
     genCorner();
 
-    int i = 3;
+    double amplitude = 4.0;
+    const double roughness = 0.70;
     while (step > 1)
     {
+        rangeRand = static_cast<int>(std::round(amplitude));
         for (; this->y < size; this->y += step)
         {
             for (; this->x < size; this->x += step)
@@ -53,9 +55,10 @@ void DiamondSquare::generation()
             this->x = 0;
         }
         step /= 2;
-        rangeRand /= 2;
+        amplitude *= roughness;
+        if (step <= 4)
+            amplitude = 0;
         this->y = 0;
-        i--;
     }
     std::cout << *this << std::endl;
 }
@@ -128,6 +131,10 @@ int DiamondSquare::borderAverage(std::vector<std::pair<int, int>> pos)
 
 int DiamondSquare::genRandomValue(int value)
 {
+    // if (round == size)
+    // {
+    //     return (value);
+    // }
     int res = value + randomInt(this->rangeRand * -1, this->rangeRand);
     if (res < 1 || res > rangeAlt)
     {
@@ -138,44 +145,6 @@ int DiamondSquare::genRandomValue(int value)
     }
     return (res);
 }
-
-int DiamondSquare::checkAround(int y, int x)
-{
-    // int value = this->map[y][x];
-    std::map<int, int> color;
-
-    if (x != 0)
-    {
-        color[this->map[y][x - 1]] += 1;
-    }
-    if (x != size)
-    {
-        color[this->map[y][x + 1]] += 1;
-    }
-    if (y != 0)
-    {
-        color[this->map[y - 1][x]] += 1;
-    }
-    if (y != size)
-    {
-        color[this->map[y + 1][x]] += 1;
-    }
-    std::map<int, int>::iterator it = color.begin();
-    std::map<int, int>::iterator max = it;
-
-    for (; it != color.end(); it++)
-    {
-        std::cout << it->first << " " << it->second << std::endl;
-        if (it->second > max->second)
-        {
-            max = it;
-        }
-    }
-    std::cout << "max = " << max->first << std::endl;
-
-    return (max->first);
-}
-
 
 void DiamondSquare::printMap() const
 {

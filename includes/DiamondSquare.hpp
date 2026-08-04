@@ -6,7 +6,7 @@
 /*   By: jle-doua <jle-doua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 17:28:03 by jle-doua          #+#    #+#             */
-/*   Updated: 2026/08/03 18:34:12 by jle-doua         ###   ########.fr       */
+/*   Updated: 2026/08/04 17:01:34 by jle-doua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,11 @@ class DiamondSquare
 private:
     int size;
     int step;
+    int round;
     int x;
     int y;
     int rangeAlt;
-    int rangeRand;
+    double rangeRand;
     std::vector<std::vector<int> > map;
 
 public:
@@ -43,10 +44,9 @@ public:
     // int borderAverage(std::pair<int,int> c1, std::pair<int,int> c2);
     int genRandomValue(int value);
     
-    int checkAround(int y, int x);
+    int checkAround(int i, int j);
     
     void printMap() const;
-    
     
     int getSize() const;
     int getRangeAlt() const;
