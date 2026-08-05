@@ -6,7 +6,7 @@
 /*   By: jle-doua <jle-doua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 17:28:03 by jle-doua          #+#    #+#             */
-/*   Updated: 2026/08/04 17:01:34 by jle-doua         ###   ########.fr       */
+/*   Updated: 2026/08/05 18:05:54 by jle-doua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,16 @@
 #include <iostream>
 #include <random>
 
-
 class DiamondSquare
 {
 private:
     int size;
     int step;
     int round;
-    int x;
-    int y;
     int rangeAlt;
     double rangeRand;
-    std::vector<std::vector<int> > map;
+    std::vector<std::vector<int>> map;
+    std::vector<std::vector<int>> mapPatch;
 
 public:
     DiamondSquare(int size, int rangeAlt, int rangeRand);
@@ -36,28 +34,27 @@ public:
 
     void generation();
     void genCorner();
-    void genCenter();
-    void genBorder();
+    void genCenter(int y, int x);
+    void genBorder(int y, int x);
 
-    int cornerAverage();
-    int borderAverage(std::vector<std::pair<int,int> > corner);
-    // int borderAverage(std::pair<int,int> c1, std::pair<int,int> c2);
+    void foreachMap(void (DiamondSquare::*func)(int, int), int step);
+
+    int cornerAverage(int y, int x);
+    int globalAverage(std::vector<std::pair<int, int>> corner);
     int genRandomValue(int value);
-    
-    int checkAround(int i, int j);
-    
-    void printMap() const;
-    
+
+    std::vector<int> getArround(int x, int y) const;
+    void medianMask();
+
+    void printMap(std::vector<std::vector<int> > map) const;
+
     int getSize() const;
     int getRangeAlt() const;
     int getRangeRand() const;
-    int getStepX() const;
-    int getStepY() const;
-    std::pair<int,int> getCenter(int y, int x) const;
+    std::pair<int, int> getCenter(int y, int x) const;
 };
 
 int randomInt(int min, int max);
 std::ostream &operator<<(std::ostream &o, DiamondSquare const &map);
-
 
 #endif
