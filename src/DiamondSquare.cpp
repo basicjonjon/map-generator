@@ -6,7 +6,7 @@
 /*   By: jle-doua <jle-doua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 17:27:19 by jle-doua          #+#    #+#             */
-/*   Updated: 2026/08/05 18:14:30 by jle-doua         ###   ########.fr       */
+/*   Updated: 2026/08/18 15:54:25 by jle-doua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ void DiamondSquare::generation()
             amplitude = 0;
     }
     medianMask();
-    printMap(this->map);
-    std::cout << BBLUE << "=====================================================" << NC << std::endl;
     printMap(this->mapPatch);
 }
 
@@ -65,8 +63,6 @@ void DiamondSquare::genCenter(int y, int x)
 
 void DiamondSquare::genBorder(int y, int x)
 {
-
-    // top
     if (y == 0)
         this->map[y][this->getCenter(y, x).second] = genRandomValue(
             globalAverage(
@@ -75,7 +71,6 @@ void DiamondSquare::genBorder(int y, int x)
         this->map[y][this->getCenter(y, x).second] = genRandomValue(
             globalAverage(
                 {std::make_pair(y, x), std::make_pair(y, x + this->step), getCenter(y, x), getCenter(y - this->step, x)}));
-    // left
     if (x == 0)
         this->map[this->getCenter(y, x).first][x] = genRandomValue(
             globalAverage(
@@ -84,12 +79,10 @@ void DiamondSquare::genBorder(int y, int x)
         this->map[this->getCenter(y, x).first][x] = genRandomValue(
             globalAverage(
                 {std::make_pair(y, x), std::make_pair(y + this->step, x), getCenter(y, x), getCenter(y, x - this->step)}));
-    // right
     if (x + this->step == this->size)
         this->map[this->getCenter(y, x).first][x + this->step] = genRandomValue(
             globalAverage(
                 {std::make_pair(y, x + this->step), std::make_pair(y + this->step, x + this->step), getCenter(y, x)}));
-    // bot
     if (y + this->step == this->size)
         this->map[y + this->step][this->getCenter(y, x).second] = genRandomValue(
             globalAverage(
@@ -124,8 +117,7 @@ std::vector<int> DiamondSquare::getArround(int y, int x) const
             }
         }
     }
-
-    return values;
+    return (values);
 }
 
 void DiamondSquare::medianMask()
@@ -134,18 +126,15 @@ void DiamondSquare::medianMask()
     std::size_t middle;
     for (size_t y = 0; y < this->map.size(); y++)
     {
-        
+
         for (size_t x = 0; x < this->map.size(); x++)
         {
             values = this->getArround(y, x);
 
             if (values.empty())
                 return;
-
             std::sort(values.begin(), values.end());
-
             middle = values.size() / 2;
-
             if (values.size() % 2 == 1)
             {
                 this->mapPatch[y][x] = values[middle];
@@ -198,11 +187,7 @@ void DiamondSquare::printMap(std::vector<std::vector<int>> map) const
     {
         for (int y = 0; y <= size; y++)
         {
-            if (map[i][y] != 0)
-            {
-                std::cout << BRED;
-            }
-            std::cout << map[i][y] << NC << " ";
+            std::cout << map[i][y] << " ";
         }
         std::cout << std::endl;
     }
@@ -225,9 +210,7 @@ int randomInt(int min, int max)
 {
     static std::random_device rd;
     static std::mt19937 generator(rd());
-
     std::uniform_int_distribution<int> distribution(min, max);
-
     return distribution(generator);
 }
 
