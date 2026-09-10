@@ -11,13 +11,15 @@
 
 <body>
     <div class="divContainer">
-        <div class="displayMap">
-            <canvas id="canvas"></canvas>
+        <div class="displayMap" >
+            <canvas width="768" height="768" id="canvas"></canvas>
         </div>
         <div class="entry">
             <div class="inputContainer" >
-                <label for="mapSize">size</label>
-                <input type="number" id="mapSize">
+                <label for="mapTxt">map txt</label>
+                <textarea id="mapTxt">
+
+                </textarea>
             </div>
             <button onclick="printMap()">
                 generate

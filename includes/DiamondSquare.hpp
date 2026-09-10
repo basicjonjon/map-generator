@@ -6,27 +6,25 @@
 /*   By: jle-doua <jle-doua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 17:28:03 by jle-doua          #+#    #+#             */
-/*   Updated: 2026/08/05 18:05:54 by jle-doua         ###   ########.fr       */
+/*   Updated: 2026/09/10 15:42:04 by jle-doua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DIAMONDSQUARE_CPP
-#define DIAMONDSQUARE_CPP
+#ifndef DIAMONDSQUARE_HPP
+#define DIAMONDSQUARE_HPP
 
-#include <vector>
-#include <iostream>
-#include <random>
+#include "mapGenerator.hpp"
 
 class DiamondSquare
 {
 private:
     int size;
     int step;
-    int round;
     int rangeAlt;
     double rangeRand;
     std::vector<std::vector<int>> map;
     std::vector<std::vector<int>> mapPatch;
+    std::vector<std::vector<int>> finalMap;
 
 public:
     DiamondSquare(int size, int rangeAlt, int rangeRand);

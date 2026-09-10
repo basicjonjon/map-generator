@@ -6,21 +6,13 @@
 /*   By: jle-doua <jle-doua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 17:27:19 by jle-doua          #+#    #+#             */
-/*   Updated: 2026/08/18 15:54:25 by jle-doua         ###   ########.fr       */
+/*   Updated: 2026/09/10 15:42:07 by jle-doua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "DiamondSquare.hpp"
 
-#include <vector>
-#include <map>
-#include <cstdlib>
-#include <cmath>
-#include <iostream>
-#include <color.h>
-#include <algorithm>
-
-DiamondSquare::DiamondSquare(int size, int rangeAlt, int rangeRand) : size(pow(2, size)), step(pow(2, size)), round(1), rangeAlt(rangeAlt), rangeRand(rangeRand), map(this->size + 1, std::vector<int>(this->size + 1, 0)), mapPatch(this->size + 1, std::vector<int>(this->size + 1, 0))
+DiamondSquare::DiamondSquare(int size, int rangeAlt, int rangeRand) : size(pow(2, size)), step(pow(2, size)), rangeAlt(rangeAlt), rangeRand(rangeRand), map(this->size + 1, std::vector<int>(this->size + 1, 0)), mapPatch(this->size + 1, std::vector<int>(this->size + 1, 0))
 {
 }
 

@@ -7,7 +7,7 @@ const color = ["#032f67","#004bb4","#34baff","#04c2e3","#56e4e7","#fedc53","#ffb
 
 function printMap()
 {
-    const input = document.getElementById("input").value
+    const input = document.getElementById("mapTxt").value
     const map = input.trim().split(/\r?\n/).map(line => line.trim().split(/\s+/).map(Number))
     let posx = 0;
     let posy = 0;
