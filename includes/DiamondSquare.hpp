@@ -6,7 +6,7 @@
 /*   By: jle-doua <jle-doua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 17:28:03 by jle-doua          #+#    #+#             */
-/*   Updated: 2026/09/10 15:42:04 by jle-doua         ###   ########.fr       */
+/*   Updated: 2026/09/10 17:33:51 by jle-doua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ public:
     std::pair<int, int> getCenter(int y, int x) const;
 };
 
-int randomInt(int min, int max);
 std::ostream &operator<<(std::ostream &o, DiamondSquare const &map);
 
 #endif

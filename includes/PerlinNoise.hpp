@@ -1,26 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mapGenerator.hpp                                   :+:      :+:    :+:   */
+/*   PerlinNoise.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jle-doua <jle-doua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/14 17:19:36 by jle-doua          #+#    #+#             */
-/*   Updated: 2026/09/10 17:49:41 by jle-doua         ###   ########.fr       */
+/*   Created: 2026/09/10 16:55:06 by jle-doua          #+#    #+#             */
+/*   Updated: 2026/09/10 17:41:58 by jle-doua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAPGENERATOR_HPP
-# define MAPGENERATOR_HPP
 
-#include <vector>
-#include <map>
-#include <cstdlib>
-#include <cmath>
-#include <iostream>
-#include <color.h>
-#include <algorithm>
+#ifndef PERLINNOISE_HPP
+# define PERLINNOISE_HPP
 
-#include "utils.hpp"
+#include "mapGenerator.hpp"
+
+class PerlinNoise
+{
+private:
+    int size;
+    std::vector<std::vector<Vector2>> perlinCells;
+    public:
+    PerlinNoise(int size);
+    ~PerlinNoise();
+    
+    void genPerlinCells();
+
+    void printPerlinCells();
+};
+
+
+
 
 #endif

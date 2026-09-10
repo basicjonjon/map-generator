@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mapGenerator.hpp                                   :+:      :+:    :+:   */
+/*   Vector2.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jle-doua <jle-doua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/14 17:19:36 by jle-doua          #+#    #+#             */
-/*   Updated: 2026/09/10 17:49:41 by jle-doua         ###   ########.fr       */
+/*   Created: 2026/09/10 16:59:27 by jle-doua          #+#    #+#             */
+/*   Updated: 2026/09/10 17:17:13 by jle-doua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAPGENERATOR_HPP
-# define MAPGENERATOR_HPP
+#ifndef VECTOR2_HPP
+#define VECTOR2_HPP
 
-#include <vector>
-#include <map>
-#include <cstdlib>
-#include <cmath>
-#include <iostream>
-#include <color.h>
-#include <algorithm>
-
-#include "utils.hpp"
+class Vector2
+{
+private:
+public:
+    float x;
+    float y;
+    Vector2(float x, float y);
+    ~Vector2();
+};
 
 #endif

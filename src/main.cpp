@@ -6,11 +6,12 @@
 /*   By: jle-doua <jle-doua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 17:05:46 by jle-doua          #+#    #+#             */
-/*   Updated: 2026/09/07 16:26:28 by jle-doua         ###   ########.fr       */
+/*   Updated: 2026/09/10 18:12:20 by jle-doua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mapGenerator.hpp"
+#include "DiamondSquare.hpp"
+#include "PerlinNoise.hpp"
 
 void error(std::string msg)
 {
@@ -33,9 +34,11 @@ int isNumber(std::string arg)
 
 int main(int argc, char **argv)
 {
-    if(argc != 2 || !isNumber(argv[1]))
+    if (argc != 2 || !isNumber(argv[1]))
         error("Wrong arg numbers");
-    DiamondSquare res(std::atoi(argv[1]), 16, 4);
-    res.generation();
-    
+    PerlinNoise res(std::atoi(argv[1]));
+    res.genPerlinCells();
+    res.printPerlinCells();
+    // DiamondSquare res(std::atoi(argv[1]), 16, 4);
+    // res.generation();
 }
