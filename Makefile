@@ -8,13 +8,13 @@ FILES_S = main \
 		DiamondSquare \
 		BacktrackingMaze \
 
-FILES_U = utils
+FILES_U =  Vector2 \
+		utils
 		
 SRC_DIR = ./src/
 UTILS_DIR = ./utils/src/
 
 OBJS_DIR = ./objet/
-
 
 OBJS_F = $(addprefix $(OBJS_DIR), $(addsuffix .o, $(FILES_S))) $(addprefix $(OBJS_DIR), $(addsuffix .o, $(FILES_U)))
 
@@ -34,7 +34,6 @@ $(OBJS_DIR)%.o: $(SRC_DIR)%.cpp
 	@mkdir -p $(OBJS_DIR)
 	@$(CXX) $(CXXFLAGS) -c $< -o $@
 	@echo "$@ : $(GREEN)[OK]$(NC)"
-
 
 $(NAME): $(OBJ)
 	@$(CXX) $(CXXFLAGS) $(OBJ) -o $(NAME)

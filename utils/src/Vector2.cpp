@@ -1,27 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.hpp                                          :+:      :+:    :+:   */
+/*   Vector2.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jle-doua <jle-doua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/10 17:28:59 by jle-doua          #+#    #+#             */
-/*   Updated: 2026/09/21 19:39:06 by jle-doua         ###   ########.fr       */
+/*   Created: 2026/09/10 17:00:44 by jle-doua          #+#    #+#             */
+/*   Updated: 2026/09/10 17:01:24 by jle-doua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_HPP
-#define UTILS_HPP
-
-#include <random>
-#include <iostream>
-
 #include "Vector2.hpp"
-#include "color.h"
 
-int randomInt(int min, int max);
-float randomFloat(float min, float max);
+Vector2::Vector2(float x, float y) : x(x) , y(y)
+{
+}
 
-void printTabInt(std::vector<std::vector<int>> tab, int size);
-
-#endif
+Vector2::~Vector2()
+{
+}
