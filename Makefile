@@ -5,7 +5,8 @@ CXXFLAGS = -Wall -Wextra -Werror -std=c++20 -Iincludes -Iutils
 RM = rm -f
 
 FILES_S = main \
-		DiamondSquare
+		DiamondSquare \
+		BacktrackingMaze \
 
 FILES_U =  Vector2 \
 		utils
