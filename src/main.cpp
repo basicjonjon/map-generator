@@ -6,11 +6,12 @@
 /*   By: jle-doua <jle-doua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 17:05:46 by jle-doua          #+#    #+#             */
-/*   Updated: 2026/09/17 15:48:09 by jle-doua         ###   ########.fr       */
+/*   Updated: 2026/09/17 16:25:48 by jle-doua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "DiamondSquare.hpp"
+#include "BacktrackingMaze.hpp"
 
 void error(std::string msg)
 {
@@ -35,7 +36,7 @@ int main(int argc, char **argv)
 {
     if(argc != 2 || !isNumber(argv[1]))
         error("Wrong arg numbers");
-    DiamondSquare res(std::atoi(argv[1]), 16, 4);
+    BacktrackingMaze res(std::atoi(argv[1]));
     res.generation();
     
 }
