@@ -1,22 +1,22 @@
 NAME = mapgen
 
 CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror -std=c++11 -Iincludes
+CXXFLAGS = -Wall -Wextra -Werror -std=c++20 -Iincludes -Iutils
 RM = rm -f
-
-LIBFT = libft/libft.a
-LIBFT_PATH = ./libft
 
 FILES_S = main \
 		DiamondSquare
+
+FILES_U =  Vector2 \
+		utils
 		
 SRC_DIR = ./src/
+UTILS_DIR = ./utils/src/
 
 OBJS_DIR = ./objet/
 
-SRCS_F = $(addprefix $(SRC_DIR), $(addsuffix .cpp, $(FILES_S)))
 
-OBJS_F = $(addprefix $(OBJS_DIR), $(addsuffix .o, $(FILES_S)))
+OBJS_F = $(addprefix $(OBJS_DIR), $(addsuffix .o, $(FILES_S))) $(addprefix $(OBJS_DIR), $(addsuffix .o, $(FILES_U)))
 
 GREEN = \033[1;32m
 BLUE =  \033[1;34m
@@ -25,11 +25,16 @@ NC = \033[0m
 
 OBJ = $(OBJS_F)
 
-# Création des .o pour les fichiers généraux
-$(OBJS_DIR)%.o: $(SRC_DIR)%.cpp
+$(OBJS_DIR)%.o: $(UTILS_DIR)%.cpp
 	@mkdir -p $(OBJS_DIR)
 	@$(CXX) $(CXXFLAGS) -c $< -o $@
 	@echo "$@ : $(GREEN)[OK]$(NC)"
+
+$(OBJS_DIR)%.o: $(SRC_DIR)%.cpp 
+	@mkdir -p $(OBJS_DIR)
+	@$(CXX) $(CXXFLAGS) -c $< -o $@
+	@echo "$@ : $(GREEN)[OK]$(NC)"
+
 
 $(NAME): $(OBJ)
 	@$(CXX) $(CXXFLAGS) $(OBJ) -o $(NAME)

@@ -6,11 +6,11 @@
 /*   By: jle-doua <jle-doua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 17:05:46 by jle-doua          #+#    #+#             */
-/*   Updated: 2026/09/07 16:26:28 by jle-doua         ###   ########.fr       */
+/*   Updated: 2026/09/17 15:48:09 by jle-doua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mapGenerator.hpp"
+#include "DiamondSquare.hpp"
 
 void error(std::string msg)
 {
