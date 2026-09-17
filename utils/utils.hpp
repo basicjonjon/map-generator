@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mapGenerator.hpp                                   :+:      :+:    :+:   */
+/*   utils.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jle-doua <jle-doua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/14 17:19:36 by jle-doua          #+#    #+#             */
-/*   Updated: 2026/09/10 17:49:41 by jle-doua         ###   ########.fr       */
+/*   Created: 2026/09/10 17:28:59 by jle-doua          #+#    #+#             */
+/*   Updated: 2026/09/10 18:07:29 by jle-doua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAPGENERATOR_HPP
-# define MAPGENERATOR_HPP
+#ifndef UTILS_HPP
+#define UTILS_HPP
 
-#include <vector>
-#include <map>
-#include <cstdlib>
-#include <cmath>
-#include <iostream>
-#include <color.h>
-#include <algorithm>
+#include <random>
 
-#include "utils.hpp"
+#include "Vector2.hpp"
+#include "color.h"
+
+int randomInt(int min, int max);
+float randomFloat(float min, float max);
+
 
 #endif

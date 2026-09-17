@@ -6,7 +6,7 @@
 /*   By: jle-doua <jle-doua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 17:27:19 by jle-doua          #+#    #+#             */
-/*   Updated: 2026/09/10 15:42:07 by jle-doua         ###   ########.fr       */
+/*   Updated: 2026/09/17 15:49:36 by jle-doua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,14 +196,6 @@ int DiamondSquare::getRangeAlt() const
 int DiamondSquare::getRangeRand() const
 {
     return (this->rangeRand);
-}
-
-int randomInt(int min, int max)
-{
-    static std::random_device rd;
-    static std::mt19937 generator(rd());
-    std::uniform_int_distribution<int> distribution(min, max);
-    return distribution(generator);
 }
 
 std::pair<int, int> DiamondSquare::getCenter(int y, int x) const
