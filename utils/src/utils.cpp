@@ -6,7 +6,7 @@
 /*   By: jle-doua <jle-doua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/10 17:29:10 by jle-doua          #+#    #+#             */
-/*   Updated: 2026/09/17 18:03:57 by jle-doua         ###   ########.fr       */
+/*   Updated: 2026/09/19 17:07:00 by jle-doua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ void printTabInt(std::vector<std::vector<int>> tab, int size)
         for (int y = 0; y < size; y++)
         {
             int pos = tab[i][y];
-            if (pos == 2)
+            if (pos == 1)
                 std::cout << BBLUE;
-            if (pos == 3)
+            if (pos == 2)
                 std::cout << BGREEN;
             std::cout << tab[i][y] << " ";
             std::cout << NC;
