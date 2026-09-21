@@ -6,13 +6,13 @@
 /*   By: jle-doua <jle-doua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/17 15:51:10 by jle-doua          #+#    #+#             */
-/*   Updated: 2026/09/19 18:19:53 by jle-doua         ###   ########.fr       */
+/*   Updated: 2026/09/21 19:30:07 by jle-doua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "BacktrackingMaze.hpp"
 
-BacktrackingMaze::BacktrackingMaze(int size) : x(0), y(0), size(size), maze(this->size, std::vector<int>(this->size, 0)), wall(this->size, std::vector<int>(this->size, 15))
+BacktrackingMaze::BacktrackingMaze(int size) : x(0), y(0), size(size), maze(this->size, std::vector<int>(this->size, 0)), wall(this->size, std::vector<int>(this->size, 15)), finalMaze((this->size * 2) + 1, std::vector<int>((this->size * 2) + 1, 0))
 {
 }
 
@@ -22,80 +22,49 @@ BacktrackingMaze::~BacktrackingMaze()
 
 void BacktrackingMaze::generation()
 {
-
     backtrack();
-    printTabInt(this->maze, this->size);
-    std::cout << std::endl;
-    printTabInt(this->wall, this->size);
-    std::cout << BRED << "------------------------" << NC << std::endl;
+    creatMaze();
+    printTabInt(finalMaze, (this->size * 2) + 1);
 }
 
 void BacktrackingMaze::backtrack()
 {
-    // (void) end;
-    std::vector<t_move> move_list;
     int rand;
     int caseX = this->x;
     int caseY = this->y;
+    std::vector<t_move> move_list;
 
     move_list = checkMovePossibility(getMovePossibility());
-
     while (move_list.size() != 0)
     {
-        for (size_t i = 0; i < move_list.size(); i++)
-            std::cout << "[" << move_list[i].y << "][" << move_list[i].x << "]" << std::endl;
         rand = randomInt(0, move_list.size() - 1);
         t_move next_move = move_list[rand];
-        setWall(next_move.y, next_move.x);
+        if (this->maze[next_move.y][next_move.x] == UNEXPLORED)
+            setWalls(next_move.y, next_move.x);
         if (this->maze[this->y][this->x] != EXPLORED)
             this->maze[this->y][this->x] = EXPLORED;
         this->y = next_move.y;
         this->x = next_move.x;
         move_list.erase(move_list.begin() + rand);
-        printTabInt(maze, this->size);
-        std::cout << std::endl;
-        printTabInt(wall, this->size);
-        std::cout << BRED << "------------------------" << NC << std::endl;
         backtrack();
         this->x = caseX;
         this->y = caseY;
     }
     this->maze[caseY][caseX] = VALID;
-    printTabInt(maze, this->size);
-    std::cout << std::endl;
-    printTabInt(wall, this->size);
-    std::cout << BRED << "------------------------" << NC << std::endl;
 }
 
 std::vector<t_move> BacktrackingMaze::getMovePossibility()
 {
     std::vector<t_move> move_list;
-    t_move move;
 
     if (y - 1 != -1)
-    {
-        move.x = this->x;
-        move.y = this->y - 1;
-        move_list.push_back(move);
-    }
+        move_list.push_back(t_move(this->x, this->y - 1));
     if (y + 1 != this->size)
-    {
-        move.x = this->x;
-        move.y = this->y + 1;
-        move_list.push_back(move);
-    }
+        move_list.push_back(t_move(this->x, this->y + 1));
     if (x - 1 != -1)
-    {
-        move.x = this->x - 1;
-        move.y = this->y;
-        move_list.push_back(move);
-    }
+        move_list.push_back(t_move(this->x - 1, this->y));
     if (x + 1 != this->size)
-    {
-        move.x = this->x + 1;
-        move.y = this->y;
-        move_list.push_back(move);
-    }
+        move_list.push_back(t_move(this->x + 1, this->y));
     return (move_list);
 }
 
@@ -115,77 +84,79 @@ std::vector<t_move> BacktrackingMaze::checkMovePossibility(std::vector<t_move> m
     return (valid_move);
 }
 
-void BacktrackingMaze::setWall(int y, int x)
+void BacktrackingMaze::setWalls(int y, int x)
 {
-    std::cout << BYELLOW << this->wall[this->y][this->x] << NC << std::endl;
     if (y < this->y)
     {
-        if (this->maze[this->y][this->x] == UNEXPLORED || this->maze[this->y - 1][this->x] != VALID)
-        {
-            this->wall[this->y][this->x] -= 1;
-        }
-        if (this->maze[this->y - 1][this->x] == UNEXPLORED)
-        {
-            this->wall[this->y - 1][this->x] -= 4;
-        }
+        this->wall[this->y][this->x] &= ~NORTH;
+        this->wall[y][x] &= ~SOUTH;
     }
-    if (y > this->y)
+    else if (y > this->y)
     {
-        if (this->maze[this->y][this->x] == UNEXPLORED || this->maze[this->y + 1][this->x] != VALID)
-        {
-            this->wall[this->y][this->x] -= 4;
-        }
-        if (this->maze[this->y + 1][this->x] == UNEXPLORED)
-        {
-            this->wall[this->y + 1][this->x] -= 1;
-        }
+        this->wall[this->y][this->x] &= ~SOUTH;
+        this->wall[y][x] &= ~NORTH;
     }
-    if (x < this->x)
+    else if (x < this->x)
     {
-        if (this->maze[this->y][this->x] == UNEXPLORED || this->maze[this->y][this->x - 1] != VALID)
-        {
-            this->wall[this->y][this->x] -= 8;
-        }
-        if (this->maze[this->y][this->x - 1] == UNEXPLORED)
-        {
-            this->wall[this->y][this->x - 1] -= 2;
-        }
+        this->wall[this->y][this->x] &= ~WEST;
+        this->wall[y][x] &= ~EAST;
     }
-    if (x > this->x)
+    else if (x > this->x)
     {
-        if (this->maze[this->y][this->x] == UNEXPLORED || this->maze[this->y][this->x + 1] != VALID)
+        this->wall[this->y][this->x] &= ~EAST;
+        this->wall[y][x] &= ~WEST;
+    }
+}
+
+void BacktrackingMaze::creatMaze()
+{
+    int wallY = 1;
+    int wallX;
+
+    buildArroundWall();
+    for (int y = 0; y < this->size; y++)
+    {
+        wallX = 1;
+        for (int x = 0; x < this->size; x++)
         {
-            this->wall[this->y][this->x] -= 2;
+            this->finalMaze[wallY][wallX] = 2;
+            if (this->wall[y][x] & EAST)
+                this->finalMaze[wallY][wallX + 1] = 1;
+            else
+                this->finalMaze[wallY][wallX + 1] = 2;
+            if (this->wall[y][x] & SOUTH)
+                this->finalMaze[wallY + 1][wallX] = 1;
+            else
+                this->finalMaze[wallY + 1][wallX] = 2;
+            wallX += 2;
         }
-        if (this->maze[this->y][this->x + 1] == UNEXPLORED)
+        wallY += 2;
+    }
+    patchMaze();
+}
+
+void BacktrackingMaze::buildArroundWall()
+{
+    for (int y = 0; y < (this->size * 2) + 1; y++)
+    {
+        for (int x = 0; x < (this->size * 2) + 1; x++)
         {
-            this->wall[this->y][this->x + 1] -= 8;
+            if (y == 0 || y == (this->size * 2) || x == 0 || x == (this->size * 2))
+            {
+                this->finalMaze[y][x] = 1;
+            }
         }
     }
 }
 
-
-// void BacktrackingMaze::setWall(int y, int x)
-// {
-//     std::cout << BYELLOW << this->wall[this->y][this->x] << NC << std::endl;
-//     if (y < this->y)
-//     {
-//         this->wall[this->y][this->x] &= ~NORTH;
-//         this->wall[this->y - 1][this->x] &= ~SOUTH;
-//     }
-//     if (y > this->y)
-//     {
-//         this->wall[this->y][this->x] &= ~SOUTH;
-//         this->wall[this->y + 1][this->x] &= ~NORTH;
-//     }
-//     if (x < this->x)
-//     {
-//         this->wall[this->y][this->x] &= ~WEST;
-//         this->wall[this->y][this->x - 1] &= ~EAST;
-//     }
-//     if (x > this->x)
-//     {
-//         this->wall[this->y][this->x] &= ~EAST;
-//         this->wall[this->y][this->x + 1] &= ~WEST;
-//     }
-// }
+void BacktrackingMaze::patchMaze()
+{
+    for (int y = 0; y < this->size * 2; y++)
+    {
+        for (int x = 0; x < this->size * 2; x++)
+        {
+            if (this->finalMaze[y][x] == 0)
+                this->finalMaze[y][x] = 1;
+        }
+    }
+}
