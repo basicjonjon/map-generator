@@ -8,8 +8,7 @@ FILES_S = main \
 		DiamondSquare \
 		BacktrackingMaze \
 
-FILES_U =  Vector2 \
-		utils
+FILES_U = utils
 		
 SRC_DIR = ./src/
 UTILS_DIR = ./utils/src/
