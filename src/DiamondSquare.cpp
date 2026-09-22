@@ -6,7 +6,7 @@
 /*   By: jle-doua <jle-doua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 17:27:19 by jle-doua          #+#    #+#             */
-/*   Updated: 2026/09/21 19:41:58 by jle-doua         ###   ########.fr       */
+/*   Updated: 2026/09/22 17:02:53 by jle-doua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void DiamondSquare::generation()
             amplitude = 0;
     }
     medianMask();
-    printMap(this->mapPatch);
+    printTabInFile("map.txt", this->mapPatch);
 }
 
 void DiamondSquare::genCorner()

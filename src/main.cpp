@@ -6,7 +6,7 @@
 /*   By: jle-doua <jle-doua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 17:05:46 by jle-doua          #+#    #+#             */
-/*   Updated: 2026/09/21 21:19:13 by jle-doua         ###   ########.fr       */
+/*   Updated: 2026/09/22 17:08:06 by jle-doua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,23 +194,20 @@ int backtrackMazeSize()
 
 int genMap()
 {
-    int algoChoice = mapAlgoChoice();
-    int mapSize = diamondSquareSize();
+    int algoChoice;
+    int mapSize;
 
+    algoChoice = mapAlgoChoice();
     if (algoChoice == 0)
-    {
         return (1);
-    }
-
+    mapSize = diamondSquareSize();
+    if (mapSize == 0)
+        return (1);
     switch (algoChoice)
     {
     case 1:
-        if (mapSize == 0)
-            return (1);
-        {
-            DiamondSquare map(mapSize, 16, 4);
-            map.generation();
-        }
+        DiamondSquare map(mapSize, 16, 4);
+        map.generation();
         break;
     }
     return (0);
@@ -218,22 +215,19 @@ int genMap()
 
 int genMaze()
 {
-    int algoChoice = mazeAlgoChoice();
-    int mazeSize = backtrackMazeSize();
-
+    int mazeSize;
+    int algoChoice;
+    algoChoice = mazeAlgoChoice();
     if (algoChoice == 0)
-    {
         return (1);
-    }
+    mazeSize = backtrackMazeSize();
+    if (mazeSize == 0)
+        return (1);
     switch (algoChoice)
     {
     case 1:
-        if (mazeSize == 0)
-            return (1);
-        {
-            BacktrackingMaze maze(mazeSize);
-            maze.generation();
-        }
+        BacktrackingMaze maze(mazeSize);
+        maze.generation();
         break;
     }
     return (0);
@@ -242,7 +236,6 @@ int genMaze()
 int main()
 {
     int typeChoice;
-
     title();
 back:
     int res = 0;
@@ -261,6 +254,16 @@ back:
         std::cout << res << std::endl;
         break;
     }
-    if (res == 1)
+    if (res)
         goto back;
+    if (typeChoice == 1)
+    {
+        std::cout << BGREEN << "map";
+    }
+    if (typeChoice == 2)
+    {
+        std::cout << BGREEN << "maze";
+    }
+    std::cout << ".txt succefully created, BYE" << std::endl;
+    
 }

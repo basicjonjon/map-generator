@@ -6,7 +6,7 @@
 /*   By: jle-doua <jle-doua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/17 15:51:10 by jle-doua          #+#    #+#             */
-/*   Updated: 2026/09/21 19:30:07 by jle-doua         ###   ########.fr       */
+/*   Updated: 2026/09/22 17:00:55 by jle-doua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void BacktrackingMaze::generation()
 {
     backtrack();
     creatMaze();
-    printTabInt(finalMaze, (this->size * 2) + 1);
+    printTabInFile("maze.txt", this->finalMaze);
 }
 
 void BacktrackingMaze::backtrack()
@@ -157,6 +157,8 @@ void BacktrackingMaze::patchMaze()
         {
             if (this->finalMaze[y][x] == 0)
                 this->finalMaze[y][x] = 1;
+            if (this->finalMaze[y][x] == 2)
+                this->finalMaze[y][x] = 0;
         }
     }
 }

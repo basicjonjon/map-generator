@@ -6,7 +6,7 @@
 /*   By: jle-doua <jle-doua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/10 17:29:10 by jle-doua          #+#    #+#             */
-/*   Updated: 2026/09/21 19:39:00 by jle-doua         ###   ########.fr       */
+/*   Updated: 2026/09/22 16:58:35 by jle-doua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,31 @@ float randomFloat(float min, float max)
     return distribution(generator);
 }
 
-void printTabInt(std::vector<std::vector<int>> tab, int size)
+void printTabInt(std::vector<std::vector<int>> tab)
 {
-    for (int i = 0; i < size; i++)
+    for (size_t i = 0; i < tab.size(); i++)
     {
-        for (int y = 0; y < size; y++)
-        {
-            int pos = tab[i][y];
-            if (pos == 1)
-                std::cout << RED;
-            if (pos == 2)
-                std::cout << BYELLOW;
+        for (size_t y = 0; y < tab.size(); y++)
             std::cout << tab[i][y] << " ";
-            std::cout << NC;
-        }
         std::cout << std::endl;
     }
+}
+
+void printTabInFile(std::string filename, std::vector<std::vector<int>> tab)
+{
+    std::ofstream outfile(filename);
+
+    if (!outfile.is_open())
+    {
+        std::cout << BRED << "ERROR : can't create file" << NC << std::endl;
+        return;
+    }
+    for (size_t i = 0; i < tab.size(); i++)
+    {
+        for (size_t y = 0; y < tab.size(); y++)
+            outfile << tab[i][y] << " ";
+        outfile << std::endl;
+    }
+    outfile << std::endl;
+    outfile.close();
 }
